@@ -1,0 +1,9 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+**/log.txt
+log.txt
+/src/ApexRegistration.Web/log.txt
+ConvertedFiles/
