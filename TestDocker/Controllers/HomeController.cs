@@ -31,11 +31,7 @@ namespace TestDocker.Controllers
             Console.WriteLine("Calling " + id);
             try
             {
-                using (var con = new SqlConnection(AppSettings.ConnectionStrings.ApexRegistration))
-                {
-                    var idName = con.QueryFirstOrDefault<IdName>("Select * from Registration.ClientTypes");
-                    return View(idName);
-                }
+                return View();
             }
             catch (Exception e)
             {
