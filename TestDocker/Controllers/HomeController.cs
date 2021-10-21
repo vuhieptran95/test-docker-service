@@ -31,7 +31,7 @@ namespace TestDocker.Controllers
             Console.WriteLine("Calling " + id);
             try
             {
-                return View();
+                return View(new IdName{Name = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()});
             }
             catch (Exception e)
             {
