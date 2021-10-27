@@ -44,8 +44,18 @@ namespace TestDocker.Controllers
 
         public async Task<IActionResult> Privacy([FromQuery]string url)
         {
-            var res = await url.AllowAnyHttpStatus().GetStringAsync();
-            return View("Privacy",res);
+            try
+            {
+                _logger.LogInformation("Start get: " + url);
+                var res = await url.AllowAnyHttpStatus().GetStringAsync();
+                _logger.LogInformation("Result: " + res);
+                return View("Privacy",res);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                throw;
+            }
         }
         
         // public async Task<IActionResult> Privacy()
