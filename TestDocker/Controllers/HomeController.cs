@@ -7,6 +7,7 @@ using Dapper;
 using Flurl.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestDocker.Models;
 
@@ -17,6 +18,7 @@ namespace TestDocker.Controllers
         public string Id { get; set; }
         public string Name { get; set; }
     }
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,27 +30,27 @@ namespace TestDocker.Controllers
 
         public IActionResult Index(int id)
         {
-            Console.WriteLine("Calling " + id);
+            _logger.LogInformation("Calling " + id);
             try
             {
-                return View(new IdName{Name = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()});
+                return View(new IdName { Name = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString() });
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e, e.Message);
                 return View("Error", e);
             }
         }
 
-        public async Task<IActionResult> Privacy()
+        public async Task<IActionResult> Privacy([FromQuery]string url)
         {
-            Console.WriteLine("Calling test-docker-service");
-            var url = "http://test-docker-service/";
-            await url.GetAsync();
-            
-            Console.WriteLine("Calling test-docker-service success");
-            
-            return View();
+            var res = await url.AllowAnyHttpStatus().GetStringAsync();
+            return View("Privacy",res);
         }
+        
+        // public async Task<IActionResult> Privacy()
+        // {
+        //     return View();
+        // }
     }
 }

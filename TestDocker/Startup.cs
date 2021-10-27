@@ -25,7 +25,8 @@ namespace TestDocker
         public void ConfigureServices(IServiceCollection services)
         {
             Configuration.Get<AppSettings>();
-            
+
+            services.AddSingleton<SerilogMiddleware, SerilogMiddleware>();
             services.AddControllersWithViews();
         }
 
@@ -49,6 +50,8 @@ namespace TestDocker
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
