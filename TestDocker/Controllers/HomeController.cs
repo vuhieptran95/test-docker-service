@@ -58,9 +58,9 @@ namespace TestDocker.Controllers
             }
         }
         
-        // public async Task<IActionResult> Privacy()
-        // {
-        //     return View();
-        // }
+        public IActionResult Privacy2()
+        {
+            return View("Privacy");
+        }
     }
 }
